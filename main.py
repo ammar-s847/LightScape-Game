@@ -44,7 +44,7 @@ class blackHole(object):
         self.hitbox = (self.x, self.y, 20, 20)
 
     def draw(self,window):
-        window.blit(pygame.image.load('Blackhole.png'), (self.x, self.y))
+        window.blit(pygame.image.load('images/Blackhole.png'), (self.x, self.y))
 
 
 class wormHole(object):
@@ -56,7 +56,7 @@ class wormHole(object):
         self.hitbox= (self.x, self.y, 20, 20)
 
     def draw(self,window):
-        window.blit(pygame.image.load('Wormhole.png'), (self.x, self.y))
+        window.blit(pygame.image.load('images/Wormhole.png'), (self.x, self.y))
 
 
 def renderScreen():

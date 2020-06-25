@@ -23,7 +23,7 @@ class Game():
             @:param screen_y : screen y coordinate to be converted to the coordinates on the 18 by 18 array
             :returns void, updates the photon's location on the board matrix directly
             '''
-    def check_for_game_win(self):
+    # def check_for_game_win(self): work in progress
 
 # PHOTON OBJECT
 class photon(object):

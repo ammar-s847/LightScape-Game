@@ -12,13 +12,12 @@ YELLOW = (255, 255, 1)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-
 #GAME CLASS
 class Game():
     def __init__(self):
         self._board = [[0 for x in range(18)] for y in range(18)]  #board to handle data, will be filled with black hole objects/photon object
 
-    def update_photon(self,screen_x, screen_y):
+    def update_photon(self, screen_x, screen_y):
         ''' @:param screen_x : screen x coordinate to be converted to the coordinates on the 18 by 18 array
             @:param screen_y : screen y coordinate to be converted to the coordinates on the 18 by 18 array
             :returns void, updates the photon's location on the board matrix directly
@@ -40,9 +39,9 @@ class photon(object):
 
 class blackHole(object):
     def __init__(self, x, y):
-        self.x=x
-        self.y=y
-        self.hitbox= (self.x, self.y, 20, 20)
+        self.x = x
+        self.y = y
+        self.hitbox = (self.x, self.y, 20, 20)
 
     def draw(self,window):
         window.blit(pygame.image.load('Blackhole.png'), (self.x, self.y))

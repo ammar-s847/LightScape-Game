@@ -1,7 +1,8 @@
 import pygame
 pygame.init()
 
-window = pygame.display.set_mode((600,500)) #create 600x600 pxl window
+WinX, WinY = 500, 400
+window = pygame.display.set_mode((WinX, WinY)) #create 600x600 pxl window
 pygame.display.set_caption("LightGame")
 run = True
 clock = pygame.time.Clock()
@@ -37,30 +38,30 @@ while run:
     keys = pygame.key.get_pressed()  # this is a list
     if keyReleased:
         if keys[pygame.K_LEFT] == 1:  # if left key is pressed - and is to prevent square moving off screen
-            if light.x >= 20:
+            if light.x >= light.radius * 2:
                 light.x -= light.vel
             else:
                 pass
             keyReleased = False
         elif keys[pygame.K_RIGHT] == 1:  # x<screenWidth-width(of character)
-            if light.x <= 570:
+            if light.x <= WinX - 20:
                 light.x += light.vel
             else:
                 pass
             keyReleased = False
         elif keys[pygame.K_UP] == 1:
-            if light.y >= 20:
+            if light.y >= light.radius * 2:
                 light.y -= light.vel
             else: 
                 pass
             keyReleased = False
         elif keys[pygame.K_DOWN] == 1:
-            if light.y <= 470:
+            if light.y <= WinY - 20:
                 light.y += light.vel
             else:
                 pass
             keyReleased = False
     elif keys[pygame.K_LEFT] == 0 and keys[pygame.K_RIGHT] == 0 and keys[pygame.K_UP] == 0 and keys[pygame.K_DOWN] == 0:
-        keyReleased= True;
+        keyReleased = True;
 
     renderScreen()

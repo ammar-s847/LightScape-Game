@@ -101,10 +101,10 @@ while run:
             if light.y >= light.radius * 2:
                 bottomBarrier = False
                 for i in range(0, len(blackHoleList)):
-                    if light.y-light.radius > (blackHoleList[i].y - 20) and light.y-light.radius < (blackHoleList[i].y + 40):
+                    if light.y-light.radius > (blackHoleList[i].y - 20) and light.y-light.radius < (
+                        blackHoleList[i].y + 40):
                         print("y")
-                        if light.x> blackHoleList[i].x and light.x< blackHoleList[
-                            i].x + 20:
+                        if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
                             print("x")
                             bottomBarrier = True
                 if not bottomBarrier:
@@ -120,8 +120,7 @@ while run:
                     if light.y + light.radius > (blackHoleList[i].y - 20) and light.y + light.radius < (
                             blackHoleList[i].y + 20):
                         print("y")
-                        if light.x > blackHoleList[i].x and light.x < blackHoleList[
-                            i].x + 20:
+                        if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
                             print("x")
                             topBarrier = True
                 if not topBarrier:

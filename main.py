@@ -24,7 +24,6 @@ class Game():
             :returns void, updates the photon's location on the board matrix directly
             '''
 
-
 # PHOTON OBJECT
 class photon(object):
     def __init__(self, x, y):

@@ -1,7 +1,7 @@
 import pygame
 pygame.init()
 
-WinX, WinY = 360, 360
+WinX, WinY = 600, 500
 window = pygame.display.set_mode((WinX, WinY)) #create 600x600 pxl window
 pygame.display.set_caption("LightScape")
 run = True
@@ -46,18 +46,34 @@ class blackHole(object):
     def draw(self,window):
         window.blit(pygame.image.load('Blackhole.png'), (self.x, self.y))
 
+
+class wormHole(object):
+    def __init__(self, x, y, direction, pair): #direction (0=can enter, 1=can exit), pair (to match up sets of enter/exit worm holes)
+        self.x=x
+        self.y=y
+        self.direction=direction
+        self.pair=pair
+        self.hitbox= (self.x, self.y, 20, 20)
+
+    def draw(self,window):
+        window.blit(pygame.image.load('Wormhole.png'), (self.x, self.y))
+
+
 def renderScreen():
     window.fill(BLACK)
-    light.draw(window)
     for i in range(0, len(blackHoleList)):
         blackHoleList[i].draw(window)
+        wormHoleList[i].draw(window)
+    light.draw(window) #render light after rendering wormholes
     pygame.display.update()
 
 
 light = photon(10,10)
 blackHoleList = []
-for i in range(0,2):
-    blackHoleList.append(blackHole(i*40, i*40))
+wormHoleList= []
+for i in range(0,2): # remove later - just for now to load in blackholes and worm holes
+    blackHoleList.append(blackHole((i+1)*40, (i+1)*40))
+    wormHoleList.append(wormHole((i+1)*60,(i+1)*80,i,0))
 
 keyReleased = True
 while run:
@@ -66,6 +82,16 @@ while run:
         if event.type == pygame.QUIT:
             pygame.quit()
             run= False
+
+    #teleports photon from one wormhole to another
+    for i in range(0, len(wormHoleList)):
+        if wormHoleList[i].direction==0:
+            if light.x > wormHoleList[i].x and light.x < wormHoleList[i].x + 20:
+                if light.y > wormHoleList[i].y and light.y < wormHoleList[i].y + 20:
+                    print("teleport!")
+                    light.x= 10+ wormHoleList[i+1].x #currently the wormhole pair must have adjacent indexcies - maybe we can make it such that it checks the index of the wormhole with the same wormhole.pair number & uses that wormhole's location
+                    light.y= 10+ wormHoleList[i+1].y #teleports photon to other wormhole
+
 
     keys = pygame.key.get_pressed()  # this is a list
     if keyReleased:
@@ -101,15 +127,16 @@ while run:
             if light.y >= light.radius * 2:
                 bottomBarrier = False
                 for i in range(0, len(blackHoleList)):
-                    if light.y-light.radius > (blackHoleList[i].y - 20) and light.y-light.radius < (
-                        blackHoleList[i].y + 40):
+                    if light.y-light.radius > (blackHoleList[i].y-20) and light.y-light.radius < (blackHoleList[i].y + 40):
                         print("y")
-                        if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
+                        if light.x> blackHoleList[i].x and light.x< blackHoleList[
+                            i].x + 20:
                             print("x")
                             bottomBarrier = True
                 if not bottomBarrier:
                     light.y -= light.vel
                 bottomBarrier = False
+
             else:
                 pass
             keyReleased = False
@@ -117,10 +144,11 @@ while run:
             if light.y <= WinY - 20:
                 topBarrier = False
                 for i in range(0, len(blackHoleList)):
-                    if light.y + light.radius > (blackHoleList[i].y - 20) and light.y + light.radius < (
+                    if light.y + light.radius > (blackHoleList[i].y - 40) and light.y + light.radius < (
                             blackHoleList[i].y + 20):
                         print("y")
-                        if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
+                        if light.x > blackHoleList[i].x and light.x < blackHoleList[
+                            i].x + 20:
                             print("x")
                             topBarrier = True
                 if not topBarrier:

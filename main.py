@@ -1,7 +1,7 @@
 import pygame
 pygame.init()
 
-WinX, WinY = 600, 500
+WinX, WinY = 360, 360
 window = pygame.display.set_mode((WinX, WinY)) #create 600x600 pxl window
 pygame.display.set_caption("LightScape")
 run = True
@@ -101,7 +101,7 @@ while run:
             if light.y >= light.radius * 2:
                 bottomBarrier = False
                 for i in range(0, len(blackHoleList)):
-                    if light.y-light.radius > (blackHoleList[i].y-20) and light.y-light.radius < (blackHoleList[i].y + 40):
+                    if light.y-light.radius > (blackHoleList[i].y - 20) and light.y-light.radius < (blackHoleList[i].y + 40):
                         print("y")
                         if light.x> blackHoleList[i].x and light.x< blackHoleList[
                             i].x + 20:
@@ -110,7 +110,6 @@ while run:
                 if not bottomBarrier:
                     light.y -= light.vel
                 bottomBarrier = False
-
             else:
                 pass
             keyReleased = False
@@ -118,7 +117,7 @@ while run:
             if light.y <= WinY - 20:
                 topBarrier = False
                 for i in range(0, len(blackHoleList)):
-                    if light.y + light.radius > (blackHoleList[i].y - 40) and light.y + light.radius < (
+                    if light.y + light.radius > (blackHoleList[i].y - 20) and light.y + light.radius < (
                             blackHoleList[i].y + 20):
                         print("y")
                         if light.x > blackHoleList[i].x and light.x < blackHoleList[

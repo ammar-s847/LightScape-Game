@@ -25,13 +25,6 @@ class Game():
             '''
 
 
-
-
-
-
-
-
-
 # PHOTON OBJECT
 class photon(object):
     def __init__(self, x, y):

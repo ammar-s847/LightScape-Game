@@ -190,9 +190,9 @@ while run:
                 bottomBarrier = False
                 for i in range(0, len(blackHoleList)):
                     if light.y - light.radius > (blackHoleList[i].y - 20) and light.y - light.radius < (blackHoleList[i].y + 40):
-                        print("y")
+                        # print("y")
                         if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
-                            print("x")
+                            # print("x")
                             bottomBarrier = True
                             lastdirection = None
                 if not bottomBarrier:
@@ -209,9 +209,9 @@ while run:
                 for i in range(0, len(blackHoleList)):
                     if light.y + light.radius > (blackHoleList[i].y - 20) and light.y + light.radius < (
                             blackHoleList[i].y + 20):
-                        print("y")
+                        # print("y")
                         if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
-                            print("x")
+                            # print("x")
                             topBarrier = True
                             lastdirection = None
                 if not topBarrier:

@@ -11,7 +11,7 @@ run = True
 clock = pygame.time.Clock()
 
 # Colours
-YELLOW = (255, 255, 1)
+VIOLET = (0,191,255)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -76,7 +76,7 @@ class photon(object):
         self.x = x
         self.y = y
         self.radius = 10
-        self.color = YELLOW
+        self.color = VIOLET
         self.vel = 20
 
     def draw(self, window):

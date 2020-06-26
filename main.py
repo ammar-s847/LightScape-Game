@@ -158,7 +158,7 @@ timeLeft = game.timeLeft
 lastTime = pygame.time.get_ticks() / 1000
 font1 = pygame.font.SysFont('Comic Sans', 20)
 level = 1
-winningLevel = 8 # One above final level number
+winningLevel = 11 # One above final level number
 
 keyReleased = True
 lastdirection = None

@@ -1,5 +1,7 @@
 import pygame
 import time
+
+pygame.mixer.pre_init(44100, 16, 2, 2048)
 pygame.init()
 
 WinX, WinY = 360, 380
@@ -117,6 +119,13 @@ def renderScreen():
 
     pygame.display.update()
 
+# Music
+try:
+    music = pygame.mixer.Sound("sounds/8bit_music.mp3") # Sounds folder is git-ignored.
+    music.play(-1)
+except:
+    music = None
+
 # Game Variables
 lives = 20
 light = None
@@ -172,8 +181,9 @@ while run:
                 winText = font2.render('YOU WIN!!!', 1, BLACK)
                 window.blit(winText, (60, 100))
                 pygame.display.update()
+                if music: music.stop()
                 time.sleep(5)
-                break;
+                break
             game = Game('levels/level' + str(level) + '.txt')
             timeLeft = None
             blackHoleList.clear()

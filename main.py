@@ -127,7 +127,7 @@ except:
     music = None
 
 # Game Variables
-lives = 20
+lives = 25
 light = None
 goal = None
 blackHoleList = []
@@ -184,7 +184,7 @@ while run:
         if light.y > goal.y and light.y < goal.y + 20:
             print(f"Level {level} Complete - congrats!")
             level += 1
-            lives += 10 # regain 10 lives after each level
+            lives += 15 # regain 15 lives after each level
             if level == winningLevel: # <- one level above the final level number.
                 window.fill(WHITE)
                 font2 = pygame.font.SysFont('Comic Sans', 60)

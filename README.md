@@ -1,6 +1,9 @@
 # LightScape
 A <b>Python</b> game built with <b>PyGame</b> where you control a Photon along a grid and navigate through obstacles in order to reach an endpoint.
 
+### Music
+* Used "Retro Platforming" from <a href="https://www.fesliyanstudios.com/royalty-free-music/downloads-c/8-bit-music/6">Fesliyan Studios 8-bit Music</a>
+
 ### Collaborators
 * <a href="https://github.com/ammar-s847">ammar-s847</a>
 * <a href="https://github.com/ibbenj">ibbenj</a>

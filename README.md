@@ -8,7 +8,7 @@ A <b>Python</b> game built with <b>PyGame</b> where you control a Photon along a
 
 ## How to Play
 * Use Arrow keys to change direction of photon movement.
-* Hold space for manual/one-by-one space movement (good for sharp turns/corners).
+* Hold the Space bar for manual/one-by-one photon movement (good for sharp turns/corners).
 * Avoid hitting black holes.
 * Use wormholes to teleport to different areas on the level.
 * Reach the end goal!

@@ -119,7 +119,10 @@ level = 1
 
 keyReleased = True
 lastdirection = None
+lives = 20
 while run:
+    if(lives == 0):
+        pygame.quit() #change to reset, include lives indicator
     clock.tick(60)
     for event in pygame.event.get():  # ENDS RUN LOOP & CLOSES WINDOW WHEN RED X IS PRESSED
         if event.type == pygame.QUIT:
@@ -161,10 +164,11 @@ while run:
                         if light.x - light.radius > blackHoleList[i].x and light.x - light.radius < blackHoleList[i].x + 40:
                             leftBarrier = True
                             lastdirection = None
+                            lives -= 1 #MINUS ONE LIFE --> SOUND EFFECT?!
                 if not leftBarrier:
                     light.x -= light.vel
                     lastdirection = 0
-                    time.sleep(0.07)
+                    time.sleep(0.19)
                 leftBarrier = False
             else:
                 pass
@@ -177,10 +181,11 @@ while run:
                         if light.x + light.radius > blackHoleList[i].x - 20 and light.x + light.radius < blackHoleList[i].x + 20:
                             rightBarrier = True
                             lastdirection = None
+                            lives -= 1 #MINUS ONE LIFE --> SOUND EFFECT?!
                 if not rightBarrier:
                     light.x += light.vel
                     lastdirection = 1
-                    time.sleep(0.07)
+                    time.sleep(0.19)
                 rightBarrier = False
             else:
                 pass
@@ -195,10 +200,11 @@ while run:
                             # print("x")
                             bottomBarrier = True
                             lastdirection = None
+                            lives -= 1 #MINUS ONE LIFE --> SOUND EFFECT?!
                 if not bottomBarrier:
                     light.y -= light.vel
                     lastdirection = 2
-                    time.sleep(0.07)
+                    time.sleep(0.19)
                 bottomBarrier = False
             else:
                 pass
@@ -214,10 +220,11 @@ while run:
                             # print("x")
                             topBarrier = True
                             lastdirection = None
+                            lives -= 1 #MINUS ONE LIFE --> SOUND EFFECT?!
                 if not topBarrier:
                     light.y += light.vel
                     lastdirection = 3
-                    time.sleep(0.07)
+                    time.sleep(0.19)
                 topBarrier = False
             else:
                 pass

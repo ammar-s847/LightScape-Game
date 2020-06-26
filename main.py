@@ -82,7 +82,7 @@ class finishLine(object):
     def draw(self, window):
         window.blit(pygame.image.load('images/Finish.png'), (self.x, self.y))
 
-
+lives = 20
 def renderScreen():
     global window, goal, light
     window.fill(BLACK)
@@ -99,6 +99,8 @@ def renderScreen():
     levelText = font1.render('Level: ' + str(level), 1, (255, 0, 0))
     window.blit(levelText, (5, 365))
 
+    ## fix this - display current lives
+    # livetxt = font1.render('Energy: ' + str(lives), 2, (255,0,0))
     pygame.display.update()
 
 
@@ -119,7 +121,6 @@ level = 1
 
 keyReleased = True
 lastdirection = None
-lives = 20
 while run:
     if(lives == 0):
         pygame.quit() #change to reset, include lives indicator

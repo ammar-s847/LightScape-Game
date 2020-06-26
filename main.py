@@ -213,6 +213,7 @@ while run:
                         if light.x - light.radius > blackHoleList[i].x and light.x - light.radius < blackHoleList[i].x + 40:
                             leftBarrier = True
                             lastdirection = None
+                            time.sleep(0.15)
                             lives -= 1 
                 if not leftBarrier:
                     light.x -= light.vel
@@ -230,6 +231,7 @@ while run:
                         if light.x + light.radius > blackHoleList[i].x - 20 and light.x + light.radius < blackHoleList[i].x + 20:
                             rightBarrier = True
                             lastdirection = None
+                            time.sleep(0.15)
                             lives -= 1
                 if not rightBarrier:
                     light.x += light.vel
@@ -249,6 +251,7 @@ while run:
                             # print("x")
                             bottomBarrier = True
                             lastdirection = None
+                            time.sleep(0.15)
                             lives -= 1
                 if not bottomBarrier:
                     light.y -= light.vel
@@ -269,6 +272,7 @@ while run:
                             # print("x")
                             topBarrier = True
                             lastdirection = None
+                            time.sleep(0.15)
                             lives -= 1
                 if not topBarrier:
                     light.y += light.vel

@@ -12,7 +12,7 @@ clock = pygame.time.Clock()
 YELLOW = (255, 255, 1)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-
+RED = (255, 0, 0)
 
 # GAME CLASS
 class Game(object):
@@ -25,9 +25,14 @@ class Game(object):
             for row in self._board:
                 self._board[x] = file.readline().rstrip().split(' ')
                 x += 1
+            # timeLeft Variable
+            readLine = file.readline().rstrip()
+            if 'time:' in readLine:
+                self.timeLeft = int(readLine[5:])
 
     def display(self):
-        global blackHoleList, light, goal
+        global blackHoleList, light, goal, timeLeft
+        timeLeft = self.timeLeft
         for row in range(0, 18):
             for col in range(0, 18):
                 if self._board[row][col] == '0':
@@ -35,8 +40,15 @@ class Game(object):
                 if self._board[row][col] == '2':
                     light = photon(10 + (col * 20), 10 + (row * 20))
                 if self._board[row][col] == '3':
-                    goal= finishLine(col * 20, row * 20)
-
+                    goal = finishLine(col * 20, row * 20)
+                if self._board[row][col] == '4':
+                    wormHoleList.append(wormHole(col * 20, row * 20, 0, 0))
+                if self._board[row][col] == '5':
+                    wormHoleList.append(wormHole(col * 20, row * 20, 1, 0))
+                if self._board[row][col] == '6':
+                    wormHoleList.append(wormHole(col * 20, row * 20, 0, 1))
+                if self._board[row][col] == '7':
+                    wormHoleList.append(wormHole(col * 20, row * 20, 1, 1))
 
 # PHOTON OBJECT
 class photon(object):
@@ -82,14 +94,14 @@ class finishLine(object):
     def draw(self, window):
         window.blit(pygame.image.load('images/Finish.png'), (self.x, self.y))
 
-
 def renderScreen():
     global window, goal, light
     window.fill(BLACK)
     goal.draw(window)
     for i in range(0, len(blackHoleList)):
         blackHoleList[i].draw(window)
-        # wormHoleList[i].draw(window)
+    for i in range(0,len(wormHoleList)):
+        wormHoleList[i].draw(window)
     light.draw(window)  # render light after rendering wormholes
 
     pygame.draw.rect(window, (211, 211, 211), (0, 360, 360, 20))
@@ -99,10 +111,15 @@ def renderScreen():
     levelText = font1.render('Level: ' + str(level), 1, (255, 0, 0))
     window.blit(levelText, (5, 365))
 
+    livetxt = font1.render('Energy: ' + str(lives), 2, (255, 0, 0))
+    window.blit(livetxt, ((100, 365)))
+
     pygame.display.update()
 
-
+# Game Variables
+lives = 20
 light = None
+goal = None
 blackHoleList = []
 wormHoleList = []
 game = Game('levels/level1.txt')
@@ -110,21 +127,21 @@ for i in game._board:
     print(str(i) + "\n")
 
 game.display()
-# wormHoleList.append(wormHole((i+1)*60, (i+1)*80, i, 0))
 
-timeLeft = 20
+timeLeft = game.timeLeft
 lastTime = pygame.time.get_ticks() / 1000
 font1 = pygame.font.SysFont('Comic Sans', 20)
 level = 1
 
 keyReleased = True
 lastdirection = None
-lives = 20
 while run:
-    if(lives == 0):
-        pygame.quit() #change to reset, include lives indicator
+    if (lives == 0) or (timeLeft <= 0):
+        pygame.quit()  # change to reset, include lives indicator
+    
     clock.tick(60)
-    for event in pygame.event.get():  # ENDS RUN LOOP & CLOSES WINDOW WHEN RED X IS PRESSED
+    
+    for event in pygame.event.get():  # Ends Game loop and quits program
         if event.type == pygame.QUIT:
             pygame.quit()
             run = False
@@ -138,15 +155,26 @@ while run:
         if wormHoleList[i].direction == 0:
             if light.x > wormHoleList[i].x and light.x < wormHoleList[i].x + 20:
                 if light.y > wormHoleList[i].y and light.y < wormHoleList[i].y + 20:
-                    light.x = 10 + wormHoleList[i+1].x  # currently the wormhole pair must have adjacent indexcies - maybe we can make it such that it checks the index of the wormhole with the same wormhole.pair number & uses that wormhole's location
-                    light.y = 10 + wormHoleList[i + 1].y  # teleports photon to other wormhole
+                    for j in range(0,len(wormHoleList)):
+                        if wormHoleList[j].pair == wormHoleList[i].pair and wormHoleList[j].direction == 1:
+                            light.x = 10 + wormHoleList[j].x
+                            light.y = 10 + wormHoleList[j].y  # teleports photon to other wormhole
 
     # when goal is reached
     if light.x > goal.x and light.x < goal.x + 20:
         if light.y > goal.y and light.y < goal.y + 20:
-            level+=1
-            game = Game('levels/level'+str(level)+'.txt')
-            timeLeft= 20
+            level += 1
+            lives += 10 # regain 10 lives after each level
+            if level == 3: # <- one level above the final level number.
+                window.fill(WHITE)
+                font2 = pygame.font.SysFont('Comic Sans', 60)
+                winText = font2.render('YOU WIN!!!', 1, BLACK)
+                window.blit(winText, (60, 100))
+                pygame.display.update()
+                time.sleep(5)
+                break;
+            game = Game('levels/level' + str(level) + '.txt')
+            timeLeft = None
             blackHoleList.clear()
             wormHoleList.clear()
             game.display()
@@ -164,11 +192,11 @@ while run:
                         if light.x - light.radius > blackHoleList[i].x and light.x - light.radius < blackHoleList[i].x + 40:
                             leftBarrier = True
                             lastdirection = None
-                            lives -= 1 #MINUS ONE LIFE --> SOUND EFFECT?!
+                            lives -= 1 
                 if not leftBarrier:
                     light.x -= light.vel
                     lastdirection = 0
-                    time.sleep(0.19)
+                    time.sleep(0.07)
                 leftBarrier = False
             else:
                 pass
@@ -181,11 +209,11 @@ while run:
                         if light.x + light.radius > blackHoleList[i].x - 20 and light.x + light.radius < blackHoleList[i].x + 20:
                             rightBarrier = True
                             lastdirection = None
-                            lives -= 1 #MINUS ONE LIFE --> SOUND EFFECT?!
+                            lives -= 1
                 if not rightBarrier:
                     light.x += light.vel
                     lastdirection = 1
-                    time.sleep(0.19)
+                    time.sleep(0.07)
                 rightBarrier = False
             else:
                 pass
@@ -200,11 +228,11 @@ while run:
                             # print("x")
                             bottomBarrier = True
                             lastdirection = None
-                            lives -= 1 #MINUS ONE LIFE --> SOUND EFFECT?!
+                            lives -= 1
                 if not bottomBarrier:
                     light.y -= light.vel
                     lastdirection = 2
-                    time.sleep(0.19)
+                    time.sleep(0.07)
                 bottomBarrier = False
             else:
                 pass
@@ -220,11 +248,11 @@ while run:
                             # print("x")
                             topBarrier = True
                             lastdirection = None
-                            lives -= 1 #MINUS ONE LIFE --> SOUND EFFECT?!
+                            lives -= 1
                 if not topBarrier:
                     light.y += light.vel
                     lastdirection = 3
-                    time.sleep(0.19)
+                    time.sleep(0.07)
                 topBarrier = False
             else:
                 pass

@@ -121,8 +121,8 @@ def renderScreen():
 
 # Music
 try:
-    music = pygame.mixer.Sound("sounds/8bit_music.mp3") # Sounds folder is git-ignored.
-    music.play(-1)
+    music = pygame.mixer.music.load("sounds/8bit_music.mp3") # Sounds folder is git-ignored.
+    pygame.mixer.music.play(-1)
 except:
     music = None
 
@@ -181,7 +181,7 @@ while run:
                 winText = font2.render('YOU WIN!!!', 1, BLACK)
                 window.blit(winText, (60, 100))
                 pygame.display.update()
-                if music: music.stop()
+                if music: pygame.mixer.music.stop()
                 time.sleep(5)
                 break
             game = Game('levels/level' + str(level) + '.txt')

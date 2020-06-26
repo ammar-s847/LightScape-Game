@@ -16,6 +16,24 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
+#5 SECOND INTRODUCTION PAGE
+fontI1 = pygame.font.SysFont('Comic Sans', 60)
+introText1 = fontI1.render('LIGHT SCAPE', 1, (255, 255, 1))
+window.blit(introText1, (40, 100))
+
+fontI2 = pygame.font.SysFont('Comic Sans', 20)
+introText2I = fontI2.render("Reach goal. Don't run out of time or lives.", 1, (255, 255, 255))
+introText2II= fontI2.render("Game Starts in 5 seconds.",1,(255,255,255))
+window.blit(introText2I, (48, 160))
+window.blit(introText2II,(95,200))
+
+fontI3 = pygame.font.SysFont('Comic Sans', 50)
+introText3 = fontI3.render('READY?', 1, (255, 0, 0))
+window.blit(introText3, (105, 300))
+
+pygame.display.update()
+time.sleep(5)
+
 # GAME CLASS
 class Game(object):
     def __init__(self, file):

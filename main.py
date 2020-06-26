@@ -99,8 +99,8 @@ def renderScreen():
     levelText = font1.render('Level: ' + str(level), 1, (255, 0, 0))
     window.blit(levelText, (5, 365))
 
-    ## fix this - display current lives .
-    # livetxt = font1.render('Energy: ' + str(lives), 2, (255,0,0))
+    livetxt = font1.render('Energy: ' + str(lives), 1, (255,0,0))
+    window.blit(livetxt, (100, 365))
     pygame.display.update()
 
 

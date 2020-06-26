@@ -151,8 +151,6 @@ goal = None
 blackHoleList = []
 wormHoleList = []
 game = Game('levels/level1.txt')
-for i in game._board:
-    print(str(i) + "\n")
 
 game.display()
 
@@ -171,7 +169,6 @@ while run:
         winText = font2.render('YOU LOST :(', 1, BLACK)
         window.blit(winText, (60, 100))
         pygame.display.update()
-        print("You Lost!")
         if music: pygame.mixer.music.stop()
         time.sleep(5)
         break
@@ -200,7 +197,6 @@ while run:
     # when goal is reached
     if light.x > goal.x and light.x < goal.x + 20:
         if light.y > goal.y and light.y < goal.y + 20:
-            print(f"Level {level} Complete - congrats!")
             level += 1
             lives += 15 # regain 15 lives after each level
             if level == winningLevel: # <- one level above the final level number.
@@ -264,9 +260,7 @@ while run:
                 bottomBarrier = False
                 for i in range(0, len(blackHoleList)):
                     if light.y - light.radius > (blackHoleList[i].y - 20) and light.y - light.radius < (blackHoleList[i].y + 40):
-                        # print("y")
                         if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
-                            # print("x")
                             bottomBarrier = True
                             lastdirection = None
                             time.sleep(0.15)
@@ -285,9 +279,7 @@ while run:
                 for i in range(0, len(blackHoleList)):
                     if light.y + light.radius > (blackHoleList[i].y - 20) and light.y + light.radius < (
                             blackHoleList[i].y + 20):
-                        # print("y")
                         if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
-                            # print("x")
                             topBarrier = True
                             lastdirection = None
                             time.sleep(0.15)

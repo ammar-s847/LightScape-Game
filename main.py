@@ -142,12 +142,21 @@ timeLeft = game.timeLeft
 lastTime = pygame.time.get_ticks() / 1000
 font1 = pygame.font.SysFont('Comic Sans', 20)
 level = 1
+winningLevel = 8 # One above final level number
 
 keyReleased = True
 lastdirection = None
 while run:
     if (lives == 0) or (timeLeft <= 0):
-        pygame.quit()  # change to reset, include lives indicator
+        window.fill(WHITE)
+        font2 = pygame.font.SysFont('Comic Sans', 60)
+        winText = font2.render('YOU LOST :(', 1, BLACK)
+        window.blit(winText, (60, 100))
+        pygame.display.update()
+        print("You Lost!")
+        if music: pygame.mixer.music.stop()
+        time.sleep(5)
+        break
     
     clock.tick(60)
     
@@ -173,9 +182,10 @@ while run:
     # when goal is reached
     if light.x > goal.x and light.x < goal.x + 20:
         if light.y > goal.y and light.y < goal.y + 20:
+            print(f"Level {level} Complete - congrats!")
             level += 1
             lives += 10 # regain 10 lives after each level
-            if level == 3: # <- one level above the final level number.
+            if level == winningLevel: # <- one level above the final level number.
                 window.fill(WHITE)
                 font2 = pygame.font.SysFont('Comic Sans', 60)
                 winText = font2.render('YOU WIN!!!', 1, BLACK)
@@ -184,12 +194,12 @@ while run:
                 if music: pygame.mixer.music.stop()
                 time.sleep(5)
                 break
+                run = False
             game = Game('levels/level' + str(level) + '.txt')
             timeLeft = None
             blackHoleList.clear()
             wormHoleList.clear()
             game.display()
-            print("goal reached - congrats!")
 
     keys = pygame.key.get_pressed()  # this is a list
     if True:
@@ -249,7 +259,7 @@ while run:
                 pass
             keyReleased = False
         elif keys[pygame.K_DOWN] == 1 or lastdirection == 3:
-            if light.y <= WinY - 20:
+            if light.y <= WinY - 40:
                 topBarrier = False
                 for i in range(0, len(blackHoleList)):
                     if light.y + light.radius > (blackHoleList[i].y - 20) and light.y + light.radius < (

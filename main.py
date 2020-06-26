@@ -121,7 +121,7 @@ def renderScreen():
 
 # Music
 try:
-    music = pygame.mixer.music.load("sounds/8bit_music.mp3") # Sounds folder is git-ignored.
+    music = pygame.mixer.music.load("sounds/8bit_music.mp3")
     pygame.mixer.music.play(-1)
 except:
     music = None

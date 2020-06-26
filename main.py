@@ -1,5 +1,5 @@
 import pygame
-
+import time
 pygame.init()
 
 WinX, WinY = 360, 380
@@ -118,6 +118,7 @@ font1 = pygame.font.SysFont('Comic Sans', 20)
 level = 1
 
 keyReleased = True
+lastdirection = None
 while run:
     clock.tick(60)
     for event in pygame.event.get():  # ENDS RUN LOOP & CLOSES WINDOW WHEN RED X IS PRESSED
@@ -149,64 +150,78 @@ while run:
             print("goal reached - congrats!")
 
     keys = pygame.key.get_pressed()  # this is a list
-    if keyReleased:
-        if keys[pygame.K_LEFT] == 1:
+    if True:
+        if keys[pygame.K_SPACE] == 1:
+            lastdirection = None  # "brake"/stop moving by clicking space
+        if keys[pygame.K_LEFT] == 1 or lastdirection == 0:
             if light.x >= light.radius * 2:
                 leftBarrier = False
                 for i in range(0, len(blackHoleList)):
                     if light.y > (blackHoleList[i].y) and light.y < (blackHoleList[i].y + 20):
-                        if light.x - light.radius > blackHoleList[i].x and light.x - light.radius < blackHoleList[
-                            i].x + 40:
+                        if light.x - light.radius > blackHoleList[i].x and light.x - light.radius < blackHoleList[i].x + 40:
                             leftBarrier = True
+                            lastdirection = None
                 if not leftBarrier:
                     light.x -= light.vel
+                    lastdirection = 0
+                    time.sleep(0.07)
                 leftBarrier = False
             else:
                 pass
             keyReleased = False
-        elif keys[pygame.K_RIGHT] == 1:
+        elif keys[pygame.K_RIGHT] == 1 or lastdirection == 1:
             if light.x <= WinX - 20:
                 rightBarrier = False
                 for i in range(0, len(blackHoleList)):
                     if light.y > (blackHoleList[i].y) and light.y < (blackHoleList[i].y + 20):
-                        if light.x + light.radius > blackHoleList[i].x - 20 and light.x + light.radius < blackHoleList[
-                            i].x + 20:
+                        if light.x + light.radius > blackHoleList[i].x - 20 and light.x + light.radius < blackHoleList[i].x + 20:
                             rightBarrier = True
+                            lastdirection = None
                 if not rightBarrier:
                     light.x += light.vel
+                    lastdirection = 1
+                    time.sleep(0.07)
                 rightBarrier = False
             else:
                 pass
             keyReleased = False
-        elif keys[pygame.K_UP] == 1:
+        elif keys[pygame.K_UP] == 1 or lastdirection == 2:
             if light.y >= light.radius * 2:
                 bottomBarrier = False
                 for i in range(0, len(blackHoleList)):
-                    if light.y - light.radius > (blackHoleList[i].y - 20) and light.y - light.radius < (
-                            blackHoleList[i].y + 40):
+                    if light.y - light.radius > (blackHoleList[i].y - 20) and light.y - light.radius < (blackHoleList[i].y + 40):
+                        print("y")
                         if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
+                            print("x")
                             bottomBarrier = True
+                            lastdirection = None
                 if not bottomBarrier:
                     light.y -= light.vel
+                    lastdirection = 2
+                    time.sleep(0.07)
                 bottomBarrier = False
             else:
                 pass
             keyReleased = False
-        elif keys[pygame.K_DOWN] == 1:
-            if light.y <= (WinY - 20) - 20:
+        elif keys[pygame.K_DOWN] == 1 or lastdirection == 3:
+            if light.y <= WinY - 20:
                 topBarrier = False
                 for i in range(0, len(blackHoleList)):
                     if light.y + light.radius > (blackHoleList[i].y - 20) and light.y + light.radius < (
                             blackHoleList[i].y + 20):
+                        print("y")
                         if light.x > blackHoleList[i].x and light.x < blackHoleList[i].x + 20:
+                            print("x")
                             topBarrier = True
+                            lastdirection = None
                 if not topBarrier:
                     light.y += light.vel
+                    lastdirection = 3
+                    time.sleep(0.07)
                 topBarrier = False
             else:
                 pass
             keyReleased = False
     elif keys[pygame.K_LEFT] == 0 and keys[pygame.K_RIGHT] == 0 and keys[pygame.K_UP] == 0 and keys[pygame.K_DOWN] == 0:
         keyReleased = True;
-
     renderScreen()
